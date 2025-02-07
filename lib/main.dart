@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/database/habit_data.dart';
+import 'package:habit_tracker/noti_service.dart';
 // import 'package:habit_tracker/models/habit.dart';
 import 'package:habit_tracker/pages/home_page.dart';
 // import 'package:habit_tracker/theme/light_mode.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotiService().initNotification();
   try {
     await HabitDatabase.initialize();
     await HabitDatabase().saveFirstLaunchDate();

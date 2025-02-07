@@ -6,6 +6,7 @@ import 'package:habit_tracker/components/habit_tile.dart';
 import 'package:habit_tracker/components/my_heatmap.dart';
 import 'package:habit_tracker/database/habit_data.dart';
 import 'package:habit_tracker/models/habit.dart';
+import 'package:habit_tracker/noti_service.dart';
 import 'package:habit_tracker/theme/theme_provider.dart';
 // import 'package:habit_tracker/theme/theme_provider.dart';
 import 'package:habit_tracker/utils/habit_util.dart';
@@ -125,21 +126,64 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CupertinoSwitch(
-              value: Provider.of<ThemeProvider>(context).isDarkMode,
-              onChanged: (value) {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .toggleTheme();
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBar(),
+      // appBar: AppBar(
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.all(16.0),
+      //       child: CupertinoSwitch(
+      //         value: Provider.of<ThemeProvider>(context).isDarkMode,
+      //         onChanged: (value) {
+      //           Provider.of<ThemeProvider>(context, listen: false)
+      //               .toggleTheme();
+      //         },
+      //       ),
+      //     ),
+      //   ],
+      // ),
       // drawer: const MyDrawer(),
+      drawer: Drawer(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      NotiService().showNotification(
+                          title: "HOW WAS YOUR DAY??",
+                          body: "have you completed your work?");
+                    },
+                    child: Text("Show notification"),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("Mode"),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context).isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewHabit,
         elevation: 3,
